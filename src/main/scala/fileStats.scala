@@ -5,15 +5,21 @@ object FileStats extends App {
 
   def fileStats(args: Array[String]): Unit = {
     val filename = args(0)
-    val command = args(1)
-    val text = Source.fromFile(filename).getLines().toSeq
-    val wordsStats = wordOcc(text)
-
-    if (command == "--words") wordsStats.foreach(println)
-    else if (command == "--lines") {
-      linesOcc(text).foreach(println)
-      println(wordsStats.size)
-      wordsStats.foreach(println)
+    val command = args(1).toLowerCase
+    if (args.size != 2)
+      println("Wrong number of arguments")
+    else {
+      val text = Source.fromFile(filename).getLines().toSeq
+      val wordsStats = wordOcc(text)
+      if (command == "--words")
+        wordsStats.foreach(println)
+      else if (command == "--lines") {
+        linesOcc(text).foreach(println)
+        println(wordsStats.size)
+        wordsStats.foreach(println)
+      }
+      else
+        println("Wrong command")
     }
   }
 
